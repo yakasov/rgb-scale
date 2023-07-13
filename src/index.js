@@ -1,6 +1,6 @@
 async function loadColours() {
   var colourDict = {};
-  const colours = await fetch("./src/rgb.txt")
+  const colours = await fetch("https://xkcd.com/color/rgb.txt")
     .then((response) => {
       return response.text();
     })
@@ -8,7 +8,10 @@ async function loadColours() {
       return data;
     });
 
-  const colourList = colours.split("\n").map((a) => a.split("#"));
+  const splitColours = colours.split("\n");
+  const colourList = splitColours
+    .slice(1, splitColours.length - 2)
+    .map((a) => a.split("#"));
   colourList.forEach(([n, h]) => {
     n = n.replace(/(\t\r|\t|\r)/gm, "");
     h = h.replace(/(\t\r|\t|\r)/gm, "");
@@ -21,15 +24,12 @@ function sortColours(cd) {
   var cdEntries = Object.entries(cd);
   var sortedColourDict = cdEntries
     .map(function (c, i) {
-      // Convert to HSL and keep track of original indices
-      return { color: hexToHSL(c[0]), index: i };
+      return { colour: hexToHSL(c[0]), index: i };
     })
     .sort(function (c1, c2) {
-      // Sort by hue
-      return c1.color[0] - c2.color[0];
+      return c1.colour[0] - c2.colour[0];
     })
     .map(function (data) {
-      // Retrieve original RGB color
       return cdEntries[data.index];
     });
   return sortedColourDict;
@@ -60,10 +60,9 @@ function changeColour(h, n) {
 }
 
 function hexToHSL(H) {
-  // Convert hex to RGB first
-  let r = 0,
-    g = 0,
-    b = 0;
+  var r = 0;
+  var g = 0;
+  var b = 0;
   if (H.length == 4) {
     r = "0x" + H[1] + H[1];
     g = "0x" + H[2] + H[2];
@@ -73,16 +72,16 @@ function hexToHSL(H) {
     g = "0x" + H[3] + H[4];
     b = "0x" + H[5] + H[6];
   }
-  // Then to HSL
+
   r /= 255;
   g /= 255;
   b /= 255;
-  let cmin = Math.min(r, g, b),
-    cmax = Math.max(r, g, b),
-    delta = cmax - cmin,
-    h = 0,
-    s = 0,
-    l = 0;
+  var cmin = Math.min(r, g, b);
+  var cmax = Math.max(r, g, b);
+  var delta = cmax - cmin;
+  var h = 0;
+  var s = 0;
+  var l = 0;
 
   if (delta == 0) h = 0;
   else if (cmax == r) h = ((g - b) / delta) % 6;

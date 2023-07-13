@@ -15,9 +15,13 @@ body {
 }
 
 h1,
-h2,
-.center {
+h3 {
+  text-shadow: 0 0 8px #000;
   text-align: center;
+}
+
+h3 {
+  color: #eee;
 }
 
 .wrapper {
