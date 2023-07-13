@@ -1,0 +1,64 @@
+@font-face {
+  font-family: "TASA Orbiter";
+  src: url("./TASAOrbiterVF.woff2");
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: "Tasa Orbiter";
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+.center {
+  text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.top-div {
+  padding: 25vh;
+  height: 70vh;
+}
+
+.bottom-div {
+  height: 30vh;
+  flex-grow: 1;
+}
+
+.scale {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.colour {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in 500ms linear;
+  visibility: visible;
+}
