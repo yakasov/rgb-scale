@@ -27,16 +27,15 @@ h3 {
 .wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
 }
 
 .top-div {
   padding: 25vh;
-  height: 70vh;
+  flex-grow: 1;
 }
 
 .bottom-div {
-  height: 30vh;
   flex-grow: 1;
 }
 
@@ -50,7 +49,7 @@ h3 {
 .colour {
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
+  flex: 1;
 }
 
 @keyframes fade-in {

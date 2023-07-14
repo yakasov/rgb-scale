@@ -1,6 +1,6 @@
 async function loadColours() {
   var colourDict = {};
-  const colours = await fetch("https://xkcd.com/color/rgb.txt")
+  const colours = await fetch("./src/rgb.txt")
     .then((response) => {
       return response.text();
     })
@@ -60,28 +60,17 @@ function changeColour(h, n) {
 }
 
 function hexToHSL(H) {
-  var r = 0;
-  var g = 0;
-  var b = 0;
-  if (H.length == 4) {
-    r = "0x" + H[1] + H[1];
-    g = "0x" + H[2] + H[2];
-    b = "0x" + H[3] + H[3];
-  } else if (H.length == 7) {
-    r = "0x" + H[1] + H[2];
-    g = "0x" + H[3] + H[4];
-    b = "0x" + H[5] + H[6];
-  }
+  var r = ("0x" + H[1] + H[2]) / 255;
+  var g = ("0x" + H[3] + H[4]) / 255;
+  var b = ("0x" + H[5] + H[6]) / 255;
 
-  r /= 255;
-  g /= 255;
-  b /= 255;
   var cmin = Math.min(r, g, b);
   var cmax = Math.max(r, g, b);
   var delta = cmax - cmin;
   var h = 0;
-  var s = 0;
-  var l = 0;
+  var s =
+    (delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1))) + (l * 100).toFixed(1);
+  var l = (cmax + cmin) / 2 + (l * 100).toFixed(1);
 
   if (delta == 0) h = 0;
   else if (cmax == r) h = ((g - b) / delta) % 6;
@@ -91,11 +80,6 @@ function hexToHSL(H) {
   h = Math.round(h * 60);
 
   if (h < 0) h += 360;
-
-  l = (cmax + cmin) / 2;
-  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-  s = +(s * 100).toFixed(1);
-  l = +(l * 100).toFixed(1);
 
   return [h, s, l];
 }
